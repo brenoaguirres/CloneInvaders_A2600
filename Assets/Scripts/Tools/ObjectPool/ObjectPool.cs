@@ -15,18 +15,6 @@ namespace Adventure.Tools.ObjectPool
         #endregion
 
         #region METHODS
-        public void CreatePool(int size)
-        {
-            for (int i = 0; i < size; i++)
-            {
-                GameObject obj = Instantiate(new GameObject(), transform.position, Quaternion.identity, transform);
-                T comp = obj.AddComponent<T>();
-                Add(comp);
-                comp.Spawn(this);
-                comp.gameObject.SetActive(false);
-            }
-        }
-
         public void Add(T obj)
         {
             if (!_objects.Contains(obj))
@@ -67,14 +55,6 @@ namespace Adventure.Tools.ObjectPool
             _objects[index].transform.position = position.position;
             _objects[index].gameObject.SetActive(true);
             return _objects[index];
-        }
-
-        public void Kill(T obj)
-        {
-            if (!_objects.Contains(obj)) return;
-            
-            obj.gameObject.SetActive(false);
-            obj.gameObject.transform.position = transform.position;
         }
         #endregion
     }
