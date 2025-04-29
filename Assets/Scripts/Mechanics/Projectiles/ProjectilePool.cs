@@ -18,14 +18,6 @@ namespace Adventure.Mechanics
 
             _pool.CreatePool(10, transform, _prefab);
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                GetFromPool();
-            }
-        }
         #endregion
 
         #region CUSTOM METHODS
