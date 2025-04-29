@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour, IPoolable
 {
+    #region CONSTANTS
+    private const string OBJECT_KILLER_TAG = "ObjectKiller";
+    #endregion
+
     #region FIELDS
     [Header("Settings")]
     private float _moveSpeed = 20f;
@@ -14,12 +18,20 @@ public class Projectile : MonoBehaviour, IPoolable
     #region UNITY CALLBACKS
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
+        _rb = GetComponentInParent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        _rb.linearVelocity = transform.forward * _moveSpeed;
+        _rb.linearVelocity = transform.up * _moveSpeed;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(OBJECT_KILLER_TAG))
+        {
+            Kill();
+        }
     }
     #endregion
 
