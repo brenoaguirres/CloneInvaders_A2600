@@ -70286,20 +70286,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2960896688874087582, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
+      propertyPath: _timeToMaxSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2960896688874087582, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
+      propertyPath: _timeToBreakSpeed
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3119186019313664050, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2117508850}
     - target: {fileID: 3119186019313664050, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
       propertyPath: m_VersionIndex
-      value: 1214
+      value: 1223
       objectReference: {fileID: 0}
     - target: {fileID: 3872084552361874944, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
       propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3872084552361874944, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
-      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5805654553697911030, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
@@ -70312,7 +70316,7 @@ PrefabInstance:
       objectReference: {fileID: 599511698}
     - target: {fileID: 6213923845433179096, guid: 728ffcd426d92514f8eed12da1088a12, type: 3}
       propertyPath: m_VersionIndex
-      value: 2579
+      value: 2588
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
