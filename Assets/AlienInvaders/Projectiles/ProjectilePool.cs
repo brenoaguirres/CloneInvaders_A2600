@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.Assertions;
-using Adventure.Tools.ObjectPool;
+using AlienInvaders.Tools.ObjectPool;
 
-namespace Adventure.Mechanics
+namespace AlienInvaders.Projectiles
 {
     public class ProjectilePool : MonoBehaviour
     {
