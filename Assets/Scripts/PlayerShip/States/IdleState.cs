@@ -22,7 +22,7 @@ namespace Adventure.PlayerShip
 
         public override void UpdateState() 
         {
-            _context.Movement2D.MoveHorizontal(_context.Inputs2D.Movement.x, _context.Rb);
+            _context.Movement2D.MoveHorizontal(_context.Inputs2D.Move.x, _context.Rb);
         }
 
         public override void FixedUpdateState() { }
@@ -31,7 +31,7 @@ namespace Adventure.PlayerShip
 
         public override CharacterStateMachine.ECharacterState GetNextState() 
         { 
-            if (Mathf.Abs(_context.Inputs2D.Movement.x) > MOVEMENT_THRESHOLD)
+            if (Mathf.Abs(_context.Inputs2D.Move.x) > MOVEMENT_THRESHOLD)
             {
                 return CharacterStateMachine.ECharacterState.Move;
             }

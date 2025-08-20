@@ -1,5 +1,5 @@
 using UnityEngine;
-using Adventure.Tools.StateMachine;
+using AlienInvaders.Tools.StateMachine;
 using UnityEngine.Assertions;
 
 namespace Adventure.PlayerShip
@@ -41,7 +41,7 @@ namespace Adventure.PlayerShip
             States.Add(ECharacterState.Move, new MoveState(_context, ECharacterState.Move));
             States.Add(ECharacterState.Shoot, new ShootState(_context, ECharacterState.Shoot));
 
-            CurrentState = States[ECharacterState.Idle];
+            _currentState = States[ECharacterState.Idle];
         }
         #endregion
     }

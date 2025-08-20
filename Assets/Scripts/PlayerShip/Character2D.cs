@@ -1,5 +1,6 @@
 using UnityEngine;
-using Adventure.Tools.StateMachine;
+using AlienInvaders.Tools.StateMachine;
+using AlienInvaders.Input;
 
 namespace Adventure.PlayerShip
 {
@@ -8,7 +9,7 @@ namespace Adventure.PlayerShip
         #region FIELDS
         [Header("Behaviour")]
         [Space]
-        private Inputs2D _inputs2D;
+        private PlayerInputs _inputs2D;
         private Movement2D _movement2D;
 
         [Header("References")]
@@ -21,7 +22,7 @@ namespace Adventure.PlayerShip
         #endregion
 
         #region PROPERTIES
-        public Inputs2D Inputs2D => _inputs2D;
+        public PlayerInputs Inputs2D => _inputs2D;
         public Movement2D Movement2D => _movement2D;
         public Rigidbody Rb => _rb;
         public CharacterStateMachine CharacterSMachine 
@@ -43,7 +44,7 @@ namespace Adventure.PlayerShip
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
-            _inputs2D = GetComponentInChildren<Inputs2D>(true);
+            _inputs2D = GetComponentInChildren<PlayerInputs>(true);
             _movement2D = GetComponentInChildren<Movement2D>(true);
         }
         #endregion

@@ -5,27 +5,45 @@ namespace AlienInvaders.Tools.LogManager
 {
     public class LogManager : MonoBehaviour
     {
-        public static LogManager Instance { get; private set; }
-        public bool debugMode = true;
+        #region CONSTANTS
+        private readonly Color infoColor = Color.white;
+        private readonly Color warningColor = Color.yellow;
+        private readonly Color errorColor = Color.red;
+        #endregion
 
+        #region SINGLETON PATTERN
+        public static LogManager Instance { get; private set; }
+        #endregion
+
+        #region FIELDS
+        [Header("Settings")]
+        [SerializeField] public bool debugMode = true;
+
+        private List<LogEntry> logMessages = new List<LogEntry>();
+
+        // message format
+        private const float messageDuration = 1f;
+        private const int maxMessages = 20;
+        private const int fontSize = 18;
+        #endregion
+
+        #region SUBCLASSES
         private class LogEntry
         {
             public string Message;
             public float TimeToLive;
+            public Color Color;
 
-            public LogEntry(string message, float timeToLive)
+            public LogEntry(string message, float timeToLive, Color color)
             {
                 Message = message;
                 TimeToLive = timeToLive;
+                Color = color;
             }
         }
+        #endregion
 
-        private List<LogEntry> logMessages = new List<LogEntry>();
-        private const float messageDuration = 1f;
-        private const int maxMessages = 20;
-        private const int fontSize = 18;
-        private readonly Color fontColor = Color.red;
-
+        #region UNITY CALLBACKS
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -37,23 +55,10 @@ namespace AlienInvaders.Tools.LogManager
             DontDestroyOnLoad(gameObject);
         }
 
-        public void LogMessage(string message)
-        {
-            if (debugMode)
-            {
-                if (logMessages.Count >= maxMessages)
-                {
-                    logMessages.RemoveAt(0); // Remove the oldest message
-                }
-                logMessages.Add(new LogEntry(message, Time.time + messageDuration));
-            }
-        }
-
         private void Update()
         {
             if (debugMode)
             {
-                // Remove expired messages
                 logMessages.RemoveAll(entry => Time.time > entry.TimeToLive);
             }
         }
@@ -64,17 +69,56 @@ namespace AlienInvaders.Tools.LogManager
             {
                 GUIStyle style = new GUIStyle
                 {
-                    normal = { textColor = fontColor },
+                    normal = { textColor = infoColor },
                     fontSize = fontSize
                 };
 
                 float yOffset = 10f;
                 foreach (var logEntry in logMessages)
                 {
+                    style.normal.textColor = logEntry.Color;
                     GUI.Label(new Rect(10, yOffset, 500, 20), logEntry.Message, style);
-                    yOffset += 20f; // Move to the next line
+                    yOffset += 20f;
                 }
             }
         }
+        #endregion
+
+
+        #region PUBLIC METHODS
+        public void LogMessage(string message)
+        {
+            if (debugMode)
+            {
+                if (logMessages.Count >= maxMessages)
+                {
+                    logMessages.RemoveAt(0);
+                }
+                logMessages.Add(new LogEntry(message, Time.time + messageDuration, infoColor));
+            }
+        }
+        public void LogWarning(string message)
+        {
+            if (debugMode)
+            {
+                if (logMessages.Count >= maxMessages)
+                {
+                    logMessages.RemoveAt(0);
+                }
+                logMessages.Add(new LogEntry(message, Time.time + messageDuration, warningColor));
+            }
+        }
+        public void LogError(string message)
+        {
+            if (debugMode)
+            {
+                if (logMessages.Count >= maxMessages)
+                {
+                    logMessages.RemoveAt(0);
+                }
+                logMessages.Add(new LogEntry(message, Time.time + messageDuration, errorColor));
+            }
+        }
+        #endregion
     }
 }

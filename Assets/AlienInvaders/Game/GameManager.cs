@@ -1,4 +1,4 @@
-using Adventure.Tools.LogManager;
+using AlienInvaders.Tools.LogManager;
 using UnityEngine;
 
 namespace AlienInvaders.Game
