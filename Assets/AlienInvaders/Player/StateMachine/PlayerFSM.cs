@@ -13,7 +13,6 @@ namespace AlienInvaders.Player
         {
             MENU,
             CHARACTER,
-            VEHICLE
         }
         #endregion
 
@@ -57,9 +56,8 @@ namespace AlienInvaders.Player
         {
             States.Add(EState.MENU, new PlayerState(EState.MENU, _player));
             States.Add(EState.CHARACTER, new PlayerState(EState.CHARACTER, _player));
-            States.Add(EState.VEHICLE, new PlayerState(EState.VEHICLE, _player));
 
-            _currentState = States[EState.CHARACTER];
+            _currentState = States[EState.MENU];
         }
         #endregion
     }
