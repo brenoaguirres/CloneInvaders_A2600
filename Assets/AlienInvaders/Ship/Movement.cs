@@ -1,11 +1,8 @@
-using System;
-using AlienInvaders.Tools.LogManager;
 using UnityEngine;
-using UnityEngine.Windows;
 
-namespace Adventure.PlayerShip
+namespace AlienInvaders.Ship
 {
-    public class Movement2D : MonoBehaviour
+    public class Movement : MonoBehaviour
     {
         #region CONSTANTS
         private const float INPUT_THRESHOLD = 0.05f;
@@ -31,25 +28,11 @@ namespace Adventure.PlayerShip
 
         private float _moveSpeed = 0f;
         private float _accLerpFactor = 0f;
-
-        [Space]
-        [Header("Event Flags")]
-        private bool canDispatchMove = true;
-        private bool canDispatchMaxSpeed = true;
-        private bool canDispatchBreak = true;
-        private bool canDispatchStop = true;
         #endregion
 
         #region PROPERTIES
         public float MoveSpeed => _moveSpeed;
         public float MaxSpeed => _maxSpeed;
-        #endregion
-
-        #region EVENTS
-        public Action OnMove;
-        public Action OnMaxSpeed;
-        public Action OnBreak;
-        public Action OnStop;
         #endregion
 
         #region CUSTOM METHODS
@@ -69,11 +52,6 @@ namespace Adventure.PlayerShip
                 float targetSpeed = input * _maxSpeed;
                 Vector3 targetVelocity = new Vector3(targetSpeed, rigidbody.linearVelocity.y, rigidbody.linearVelocity.z);
                 rigidbody.linearVelocity = Vector3.Lerp(rigidbody.linearVelocity, targetVelocity, _accLerpFactor);
-
-                if (Mathf.Abs(rigidbody.linearVelocity.x) >= _maxSpeed)
-                    DispatchMaxSpeedEvent();
-                else
-                    DispatchMoveEvent();
             }
             else
             {
@@ -89,11 +67,6 @@ namespace Adventure.PlayerShip
 
             Vector3 targetVelocity = new Vector3(0f, rigidbody.linearVelocity.y, rigidbody.linearVelocity.z);
             rigidbody.linearVelocity = Vector3.Lerp(rigidbody.linearVelocity, targetVelocity, 1f - _accLerpFactor);
-            
-            if (Mathf.Abs(rigidbody.linearVelocity.x) <= 0)
-                DispatchStopEvent();
-            else
-                DispatchBreakEvent();
         }
 
         private void MoveHorizontalImpulse(float input, Rigidbody rigidbody)
@@ -104,8 +77,6 @@ namespace Adventure.PlayerShip
             {
                 Vector3 targetVelocity = new Vector3(input * _maxSpeed, rigidbody.linearVelocity.y, rigidbody.linearVelocity.z);
                 rigidbody.linearVelocity = targetVelocity;
-
-                DispatchMaxSpeedEvent();
             }
             else
             {
@@ -118,8 +89,6 @@ namespace Adventure.PlayerShip
         {
             Vector3 targetVelocity = new Vector3(0f, rigidbody.linearVelocity.y, rigidbody.linearVelocity.z);
             rigidbody.linearVelocity = targetVelocity;
-
-            DispatchStopEvent();
         }
 
         public void SetForceType(ForceType _type)
@@ -139,49 +108,6 @@ namespace Adventure.PlayerShip
             }
 
             _moveSpeed = Mathf.Abs(rigidbody.linearVelocity.x);
-        }
-        #endregion
-
-        #region EVENT DISPATCH
-        private void DispatchMoveEvent()
-        {
-            if (!canDispatchMove) return;
-
-            OnMove?.Invoke();
-
-            canDispatchMove = false;
-            canDispatchBreak = true;
-            canDispatchStop = true;
-        }
-        private void DispatchMaxSpeedEvent()
-        {
-            if (!canDispatchMaxSpeed) return;
-
-            OnMaxSpeed?.Invoke();
-
-            canDispatchMaxSpeed = false;
-            canDispatchBreak = true;
-            canDispatchStop = true;
-        }
-        private void DispatchBreakEvent()
-        {
-            if (!canDispatchBreak) return;
-
-            OnBreak?.Invoke();
-
-            canDispatchBreak = false;
-            canDispatchMove = true;
-            canDispatchMaxSpeed = true;
-        }
-        private void DispatchStopEvent()
-        {
-            if (!canDispatchStop) return;
-
-            OnStop?.Invoke();
-
-            canDispatchStop = false;
-            canDispatchMove = true;
-            canDispatchMaxSpeed = true;
         }
         #endregion
     }
